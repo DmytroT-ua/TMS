@@ -27,7 +27,7 @@ namespace TaskManagementSystem
 			services.AddTransient<TaskObjectLogic>();
 			services.AddTransient<ITaskRepository, TaskRepository>();
 			services.AddTransient<TaskService>();
-			
+
 
 			services.AddDbContext<AppDBContext>(options =>
 				options.UseSqlServer(Configuration.GetConnectionString("TMS_Connection")));

@@ -22,7 +22,7 @@ namespace TaskManagementSystem.DBWork
 
 		public async Task<IEnumerable<GetTaskDTO>> GetAllAsync()
 			=> await _context.Tasks
-				.Select(t=> new GetTaskDTO(t))
+				.Select(t => new GetTaskDTO(t))
 				.ToListAsync();
 
 		public async Task<TMS.Task> AddAsync(CreateTaskDTO dto)
@@ -67,12 +67,12 @@ namespace TaskManagementSystem.DBWork
 				.Where(t => t.ParentTaskId == parentId)
 				.CountAsync();
 
-		public async Task<int> GetChildrenAmountByState(Guid parentId, Guid stateId) 
+		public async Task<int> GetChildrenAmountByState(Guid parentId, Guid stateId)
 			=> await _context.Tasks
 				.Where(t => t.ParentTaskId == parentId && t.StateId == stateId)
 				.CountAsync();
 
-		public bool IsTaskExists(Guid id) 
+		public bool IsTaskExists(Guid id)
 			=> _context.Tasks.Any(e => e.Id == id);
 
 		public async Task<TMS.Task> GetTaskWithChildren(Guid id)
@@ -83,20 +83,20 @@ namespace TaskManagementSystem.DBWork
 		public async Task<IEnumerable<ReportTaskDTO>> GetTasksForReport(DateTime date)
 		{
 			var data = from task in _context.Tasks
-						 join history in _context.TaskHistories on task.Id equals history.TaskId
-						 join state in _context.TaskStates on task.StateId equals state.Id
-						 join parent in _context.Tasks on task.ParentTaskId equals parent.Id
-						 where history.StateId == CONST.Task.State.InProgress && 
-							(history.StartDate <= date && (history.EndDate >= date || history.EndDate == null))
-						 select new ReportTaskDTO 
-						 {
-							 Name = task.Name,
-							 Description = task.Description,
-							 FinishDate = task.FinishDate,
-							 StartDate =  task.StartDate,
-							 State = state.Name,
-							 Parent = parent.Name
-						 };
+					   join history in _context.TaskHistories on task.Id equals history.TaskId
+					   join state in _context.TaskStates on task.StateId equals state.Id
+					   join parent in _context.Tasks on task.ParentTaskId equals parent.Id
+					   where history.StateId == CONST.Task.State.InProgress &&
+						  (history.StartDate <= date && (history.EndDate >= date || history.EndDate == null))
+					   select new ReportTaskDTO
+					   {
+						   Name = task.Name,
+						   Description = task.Description,
+						   FinishDate = task.FinishDate,
+						   StartDate = task.StartDate,
+						   State = state.Name,
+						   Parent = parent.Name
+					   };
 			return await data.ToListAsync();
 		}
 	}
