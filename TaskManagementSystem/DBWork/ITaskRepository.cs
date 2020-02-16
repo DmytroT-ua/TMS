@@ -86,7 +86,7 @@ namespace TaskManagementSystem.DBWork
 		/// <summary>
 		/// Loads task with children
 		/// </summary>
-		/// <param name="id"><Task id/param>
+		/// <param name="id">Task id</param>
 		/// <returns>Returns task with children</returns>
 		Task<TMS.Task> GetTaskWithChildren(Guid id);
 
