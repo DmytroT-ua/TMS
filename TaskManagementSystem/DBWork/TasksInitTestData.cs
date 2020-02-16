@@ -15,9 +15,9 @@ namespace TaskManagementSystem.DBWork
 				new TaskState { Name = "Completed" }
 			};
 
-		public IEnumerable<Task> GetTasks()
+		public IEnumerable<TMSTask> GetTasks()
 		{
-			var parentTaskWithoutState = new Task
+			var parentTaskWithoutState = new TMSTask
 			{
 				Name = "Parent_level_1",
 				Description = "Parent_level_1 without state",
@@ -25,7 +25,7 @@ namespace TaskManagementSystem.DBWork
 				FinishDate = DateTime.Now.AddDays(2),
 			};
 
-			var parentTaskWithState = new Task
+			var parentTaskWithState = new TMSTask
 			{
 				Name = "Parent_level_1",
 				Description = "Parent_level_1 with state",
@@ -36,7 +36,7 @@ namespace TaskManagementSystem.DBWork
 			var level2TasksWithoutState = GetTasksForParent(parentTaskWithoutState);
 			var level2TasksWithState = GetTasksForParent(parentTaskWithState);
 
-			var level3Task = new Task
+			var level3Task = new TMSTask
 			{
 				Name = "Level_3",
 				StartDate = DateTime.Now,
@@ -44,7 +44,7 @@ namespace TaskManagementSystem.DBWork
 				ParentTask = level2TasksWithState.FirstOrDefault()
 			};
 
-			var result = new List<Task>
+			var result = new List<TMSTask>
 			{
 				parentTaskWithoutState,
 				parentTaskWithState
@@ -56,11 +56,11 @@ namespace TaskManagementSystem.DBWork
 			return result;
 		}
 
-		public IEnumerable<Task> GetTasksForParent(Task task, int amount = 2)
+		public IEnumerable<TMSTask> GetTasksForParent(TMSTask task, int amount = 2)
 		{
 			for (int i = 0; i < amount; i++)
 			{
-				yield return new Task
+				yield return new TMSTask
 				{
 					Name = "Level_2",
 					StartDate = DateTime.Now,

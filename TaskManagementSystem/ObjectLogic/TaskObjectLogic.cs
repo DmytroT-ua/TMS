@@ -39,7 +39,7 @@ namespace TaskManagementSystem.ObjectLogic
 
 			foreach (var item in entities)
 			{
-				await _historyRep.UpdateHistoryAsync((TMS.Task)item);
+				await _historyRep.UpdateHistoryAsync((TMS.TMSTask)item);
 			}
 		}
 	}

@@ -17,7 +17,7 @@ namespace TaskManagementSystem.DBWork
 		}
 
 		/// <inheritdoc/>
-		public async Task UpdateHistoryAsync(TMS.Task task)
+		public async Task UpdateHistoryAsync(TMS.TMSTask task)
 		{
 			var res = await GetLastRecord(task);
 			if (res != null)
@@ -28,7 +28,7 @@ namespace TaskManagementSystem.DBWork
 		}
 
 		/// <inheritdoc/>
-		public TMS.TaskHistory AddNewRecordAsync(TMS.Task task)
+		public TMS.TaskHistory AddNewRecordAsync(TMS.TMSTask task)
 		{
 			var newRecord = GetNewRecord(task);
 			_context.TaskHistories.Add(newRecord);
@@ -44,7 +44,7 @@ namespace TaskManagementSystem.DBWork
 		/// </summary>
 		/// <param name="task"></param>
 		/// <returns>Returns history record.</returns>
-		private async Task<TMS.TaskHistory> GetLastRecord(TMS.Task task)
+		private async Task<TMS.TaskHistory> GetLastRecord(TMS.TMSTask task)
 			=> await _context.TaskHistories
 				.Where(h => h.TaskId == task.Id)
 				.OrderByDescending(h => h.StartDate)
@@ -55,7 +55,7 @@ namespace TaskManagementSystem.DBWork
 		/// </summary>
 		/// <param name="task">Task record</param>
 		/// <returns>Returns history record.</returns>
-		private TMS.TaskHistory GetNewRecord(TMS.Task task)
+		private TMS.TaskHistory GetNewRecord(TMS.TMSTask task)
 			=> new TMS.TaskHistory
 			{
 				StateId = task.StateId,

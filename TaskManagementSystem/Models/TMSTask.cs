@@ -7,7 +7,7 @@ namespace TaskManagementSystem.Models
 	/// <summary>
 	/// Task model for Task Management system
 	/// </summary>
-	public class Task : BaseEntity
+	public class TMSTask : BaseEntity
 	{
 		public string Description { get; set; }
 
@@ -18,14 +18,14 @@ namespace TaskManagementSystem.Models
 		public TaskState State { get; set; }
 		public Guid? StateId { get; set; }
 
-		public Task ParentTask { get; set; }
+		public TMSTask ParentTask { get; set; }
 		public Guid? ParentTaskId { get; set; }
 
-		public ICollection<Task> Children { get; set; }
+		public ICollection<TMSTask> Children { get; set; }
 
-		public Task() { }
+		public TMSTask() { }
 
-		public Task(CreateTaskDTO dto)
+		public TMSTask(CreateTaskDTO dto)
 		{
 			Name = dto.Name;
 			Description = dto.Description;

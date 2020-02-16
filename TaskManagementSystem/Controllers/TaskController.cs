@@ -37,7 +37,7 @@ namespace TaskManagementSystem.Controllers
 		/// <param name="id">Task id</param>
 		/// <returns>Returns task.</returns>
 		[HttpGet("{id}")]
-		public async Task<ActionResult<TMS.Task>> GetTask(Guid id)
+		public async Task<ActionResult<TMS.TMSTask>> GetTask(Guid id)
 		{
 			var task = await _taskService.FindAsync(id);
 			if (task == null)
@@ -88,7 +88,7 @@ namespace TaskManagementSystem.Controllers
 		[HttpPost]
 		public async Task<ActionResult<Task>> PostTask(CreateTaskDTO task)
 		{
-			TMS.Task crearedTask = await _taskService.AddAsync(task);
+			TMS.TMSTask crearedTask = await _taskService.AddAsync(task);
 			return CreatedAtAction("GetTask", new { id = crearedTask.Id }, crearedTask);
 		}
 

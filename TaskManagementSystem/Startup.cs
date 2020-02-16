@@ -7,6 +7,8 @@ using Microsoft.Extensions.Hosting;
 using TaskManagementSystem.DBWork;
 using TaskManagementSystem.ObjectLogic;
 using TaskManagementSystem.Services;
+using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
 
 namespace TaskManagementSystem
 {
@@ -28,6 +30,10 @@ namespace TaskManagementSystem
 			services.AddTransient<ITaskRepository, TaskRepository>();
 			services.AddTransient<TaskService>();
 
+			services.AddSwaggerGen(c =>
+			{
+				c.SwaggerDoc("v1", new OpenApiInfo { Title = "TMS API Docs", Version = "v1" });
+			});
 
 			services.AddDbContext<AppDBContext>(options =>
 				options.UseSqlServer(Configuration.GetConnectionString("TMS_Connection")));
@@ -39,6 +45,14 @@ namespace TaskManagementSystem
 			{
 				app.UseDeveloperExceptionPage();
 			}
+
+			app.UseSwagger();
+
+			app.UseSwaggerUI(c =>
+			{
+				c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
+				c.RoutePrefix = string.Empty;
+			});
 
 			app.UseHttpsRedirection();
 

@@ -19,7 +19,7 @@ namespace TaskManagementSystem.DTO
 
 		public Guid? ParentTaskId { get; set; }
 
-		public GetTaskDTO(TMS.Task task)
+		public GetTaskDTO(TMS.TMSTask task)
 		{
 			Id = task.Id;
 			Description = task.Description;

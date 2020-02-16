@@ -19,7 +19,7 @@ namespace TaskManagementSystem.DBWork
 
 		public DbSet<TMS.TaskState> TaskStates { get; set; }
 
-		public DbSet<TMS.Task> Tasks { get; set; }
+		public DbSet<TMS.TMSTask> Tasks { get; set; }
 
 		public DbSet<TMS.TaskHistory> TaskHistories { get; set; }
 
@@ -38,7 +38,7 @@ namespace TaskManagementSystem.DBWork
 				.WithMany(t => t.TaskHistories)
 				.OnDelete(DeleteBehavior.SetNull);
 
-			modelBuilder.Entity<TMS.Task>()
+			modelBuilder.Entity<TMS.TMSTask>()
 				.HasOne(p => p.State)
 				.WithMany(t => t.Tasks)
 				.OnDelete(DeleteBehavior.SetNull);
@@ -60,7 +60,7 @@ namespace TaskManagementSystem.DBWork
 		{
 			_taskLogic = _container.GetService<TaskObjectLogic>();
 			var entities = GetChangedEntities();
-			await _taskLogic.ExecuteAsync(GetChangedEntitiesByType(entities, typeof(TMS.Task)));
+			await _taskLogic.ExecuteAsync(GetChangedEntitiesByType(entities, typeof(TMS.TMSTask)));
 		}
 
 		protected IEnumerable<EntityEntry> GetChangedEntities()

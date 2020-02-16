@@ -19,7 +19,7 @@ namespace TaskManagementSystem.DBWork
 		}
 
 		/// <inheritdoc/>
-		public async Task<TMS.Task> FindAsync(Guid id)
+		public async Task<TMS.TMSTask> FindAsync(Guid id)
 			=> await _context.Tasks.FindAsync(id);
 
 		/// <inheritdoc/>
@@ -29,9 +29,9 @@ namespace TaskManagementSystem.DBWork
 				.ToListAsync();
 
 		/// <inheritdoc/>
-		public async Task<TMS.Task> AddAsync(CreateTaskDTO dto)
+		public async Task<TMS.TMSTask> AddAsync(CreateTaskDTO dto)
 		{
-			var taskToAdd = new TMS.Task(dto);
+			var taskToAdd = new TMS.TMSTask(dto);
 
 			_context.Tasks.Add(taskToAdd);
 			await _context.SaveChangesAsync();
@@ -40,14 +40,14 @@ namespace TaskManagementSystem.DBWork
 		}
 
 		/// <inheritdoc/>
-		public async Task UpdateAsync(UpdateTaskDTO dto, TMS.Task taskEntity)
+		public async Task UpdateAsync(UpdateTaskDTO dto, TMS.TMSTask taskEntity)
 		{
 			taskEntity.UpdateFromDTO(dto, await GetChildrenAmount(taskEntity.Id));
 			await _context.SaveChangesAsync();
 		}
 
 		/// <inheritdoc/>
-		public async Task<TMS.Task> RemoveAsync(TMS.Task task)
+		public async Task<TMS.TMSTask> RemoveAsync(TMS.TMSTask task)
 		{
 			_context.Tasks.Remove(task);
 			await _context.SaveChangesAsync();
@@ -87,7 +87,7 @@ namespace TaskManagementSystem.DBWork
 			=> _context.Tasks.Any(e => e.Id == id);
 
 		/// <inheritdoc/>
-		public async Task<TMS.Task> GetTaskWithChildren(Guid id)
+		public async Task<TMS.TMSTask> GetTaskWithChildren(Guid id)
 			=> await _context.Tasks
 				.Include(t => t.Children)
 				.SingleOrDefaultAsync(t => t.Id == id);

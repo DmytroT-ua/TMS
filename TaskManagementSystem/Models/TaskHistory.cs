@@ -13,7 +13,7 @@ namespace TaskManagementSystem.Models
 		public override string Name { get => base.Name; set => base.Name = value; }
 
 		public Guid TaskId { get; set; }
-		public TMS.Task Task {get;set;}
+		public TMS.TMSTask Task {get;set;}
 
 		public Guid? StateId { get; set; }
 		public TMS.TaskState State { get; set; }

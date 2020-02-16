@@ -12,14 +12,14 @@ namespace TaskManagementSystem.DBWork
 		/// Updates last history record and creates next record.
 		/// </summary>
 		/// <param name="task"></param>
-		Task UpdateHistoryAsync(TMS.Task task);
+		Task UpdateHistoryAsync(TMS.TMSTask task);
 
 		/// <summary>
 		/// Creates new history record.
 		/// </summary>
 		/// <param name="task"></param>
 		/// <returns>Returns created record.</returns>
-		TMS.TaskHistory AddNewRecordAsync(TMS.Task task);
+		TMS.TaskHistory AddNewRecordAsync(TMS.TMSTask task);
 
 		/// <summary>
 		/// Executes SaveChanges.
