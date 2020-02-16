@@ -28,7 +28,7 @@ namespace TaskManagementSystem
 			services.AddTransient<ITaskHistoryRepository, TaskHistoryRepository>();
 			services.AddTransient<TaskObjectLogic>();
 			services.AddTransient<ITaskRepository, TaskRepository>();
-			services.AddTransient<TaskService>();
+			services.AddTransient<ITaskService, TaskService>();
 
 			services.AddSwaggerGen(c =>
 			{

@@ -12,7 +12,7 @@ namespace TaskManagementSystem.Services
 	/// <summary>
 	/// Contains all methods for performing basic task functions.
 	/// </summary>
-	public class TaskService
+	public class TaskService : ITaskService
 	{
 		private readonly ITaskRepository _taskRep;
 
@@ -54,7 +54,7 @@ namespace TaskManagementSystem.Services
 		/// </summary>
 		/// <param name="id">Task id</param>
 		/// <param name="task">Update task model</param>
-		public async Task UpdateAsync(Guid id, UpdateTaskDTO task)
+		public async Task<TMSTask> UpdateAsync(Guid id, UpdateTaskDTO task)
 		{
 			var taskEntity = await _taskRep.FindAsync(id);
 			if (taskEntity != null)
@@ -62,6 +62,7 @@ namespace TaskManagementSystem.Services
 				await _taskRep.UpdateAsync(task, taskEntity);
 				await UpdateParentTaskState(task.ParentTaskId ?? Guid.Empty);
 			}
+			return taskEntity;
 		}
 
 		/// <summary>

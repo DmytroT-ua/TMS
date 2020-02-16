@@ -16,9 +16,9 @@ namespace TaskManagementSystem.Controllers
 	[ApiController]
 	public class TaskController : ControllerBase
 	{
-		private readonly TaskService _taskService;
+		private readonly ITaskService _taskService;
 
-		public TaskController(TaskService taskService)
+		public TaskController(ITaskService taskService)
 		{
 			_taskService = taskService;
 		}
@@ -28,8 +28,8 @@ namespace TaskManagementSystem.Controllers
 		/// </summary>
 		/// <returns>Returns all tasks.</returns>
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<GetTaskDTO>>> GetTasks()
-			=> await _taskService.GetAllAsync() as List<GetTaskDTO>;
+		public async Task<IEnumerable<GetTaskDTO>> GetTasks()
+			=> await _taskService.GetAllAsync();
 
 		/// <summary>
 		/// Gets single task by id.
@@ -88,6 +88,10 @@ namespace TaskManagementSystem.Controllers
 		[HttpPost]
 		public async Task<ActionResult<Task>> PostTask(CreateTaskDTO task)
 		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
 			TMSTask crearedTask = await _taskService.AddAsync(task);
 			return CreatedAtAction("GetTask", new { id = crearedTask.Id }, crearedTask);
 		}
