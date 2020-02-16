@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TaskManagementSystem.DTO;
-using TMS = TaskManagementSystem.Models;
+using TaskManagementSystem.Models;
 
 namespace TaskManagementSystem.DBWork
 {
@@ -16,7 +16,7 @@ namespace TaskManagementSystem.DBWork
 		/// </summary>
 		/// <param name="id">Task id</param>
 		/// <returns>Returns task</returns>
-		Task<TMS.TMSTask> FindAsync(Guid id);
+		Task<TMSTask> FindAsync(Guid id);
 
 		/// <summary>
 		/// Gets all tasks.
@@ -29,14 +29,14 @@ namespace TaskManagementSystem.DBWork
 		/// </summary>
 		/// <param name="task"></param>
 		/// <returns>Returns created task.</returns>
-		Task<TMS.TMSTask> AddAsync(CreateTaskDTO task);
+		Task<TMSTask> AddAsync(CreateTaskDTO task);
 
 		/// <summary>
 		/// Updates task by id.
 		/// </summary>
 		/// <param name="task">Task dto</param>
 		/// <param name="taskEntity">Current task model</param>
-		Task UpdateAsync(UpdateTaskDTO task, TMS.TMSTask taskEntity);
+		Task UpdateAsync(UpdateTaskDTO task, TMSTask taskEntity);
 
 
 		/// <summary>
@@ -44,7 +44,7 @@ namespace TaskManagementSystem.DBWork
 		/// </summary>
 		/// <param name="task">Task entity</param>
 		/// <returns>Returns removed task.</returns>
-		Task<TMS.TMSTask> RemoveAsync(TMS.TMSTask task);
+		Task<TMSTask> RemoveAsync(TMSTask task);
 
 		/// <summary>
 		/// Finds parent task id
@@ -88,7 +88,7 @@ namespace TaskManagementSystem.DBWork
 		/// </summary>
 		/// <param name="id">Task id</param>
 		/// <returns>Returns task with children</returns>
-		Task<TMS.TMSTask> GetTaskWithChildren(Guid id);
+		Task<TMSTask> GetTaskWithChildren(Guid id);
 
 		/// <summary>
 		/// Loads tasks in progress for report

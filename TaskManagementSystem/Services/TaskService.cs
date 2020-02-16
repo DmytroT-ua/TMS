@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskManagementSystem.DBWork;
 using TaskManagementSystem.DTO;
-using TMS = TaskManagementSystem.Models;
+using TaskManagementSystem.Models;
 
 namespace TaskManagementSystem.Services
 {
@@ -27,7 +27,7 @@ namespace TaskManagementSystem.Services
 		/// </summary>
 		/// <param name="id">Task id</param>
 		/// <returns>Returns task.</returns>
-		public async Task<TMS.TMSTask> FindAsync(Guid id)
+		public async Task<TMSTask> FindAsync(Guid id)
 			=> await _taskRep.FindAsync(id);
 
 		/// <summary>
@@ -42,7 +42,7 @@ namespace TaskManagementSystem.Services
 		/// </summary>
 		/// <param name="task">Create task model</param>
 		/// <returns>Returns created task.</returns>
-		public async Task<TMS.TMSTask> AddAsync(CreateTaskDTO task)
+		public async Task<TMSTask> AddAsync(CreateTaskDTO task)
 		{
 			var newTask = await _taskRep.AddAsync(task);
 			await UpdateParentTaskState(task.ParentTaskId ?? Guid.Empty);

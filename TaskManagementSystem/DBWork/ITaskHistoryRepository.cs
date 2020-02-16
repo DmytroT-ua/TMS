@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using TMS = TaskManagementSystem.Models;
+using TaskManagementSystem.Models;
 
 namespace TaskManagementSystem.DBWork
 {
@@ -12,14 +12,14 @@ namespace TaskManagementSystem.DBWork
 		/// Updates last history record and creates next record.
 		/// </summary>
 		/// <param name="task"></param>
-		Task UpdateHistoryAsync(TMS.TMSTask task);
+		Task UpdateHistoryAsync(TMSTask task);
 
 		/// <summary>
 		/// Creates new history record.
 		/// </summary>
 		/// <param name="task"></param>
 		/// <returns>Returns created record.</returns>
-		TMS.TaskHistory AddNewRecordAsync(TMS.TMSTask task);
+		TaskHistory AddNewRecordAsync(TMSTask task);
 
 		/// <summary>
 		/// Executes SaveChanges.

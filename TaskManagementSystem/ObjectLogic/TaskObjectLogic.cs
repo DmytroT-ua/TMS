@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TaskManagementSystem.DBWork;
-using TMS = TaskManagementSystem.Models;
+using TaskManagementSystem.Models;
 
 namespace TaskManagementSystem.ObjectLogic
 {
@@ -39,7 +39,7 @@ namespace TaskManagementSystem.ObjectLogic
 
 			foreach (var item in entities)
 			{
-				await _historyRep.UpdateHistoryAsync((TMS.TMSTask)item);
+				await _historyRep.UpdateHistoryAsync((TMSTask)item);
 			}
 		}
 	}

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using TMS = TaskManagementSystem.Models;
 
 namespace TaskManagementSystem.Models
 {
@@ -13,10 +12,10 @@ namespace TaskManagementSystem.Models
 		public override string Name { get => base.Name; set => base.Name = value; }
 
 		public Guid TaskId { get; set; }
-		public TMS.TMSTask Task {get;set;}
+		public TMSTask Task {get;set;}
 
 		public Guid? StateId { get; set; }
-		public TMS.TaskState State { get; set; }
+		public TaskState State { get; set; }
 
 		public DateTime? StartDate { get; set; }
 

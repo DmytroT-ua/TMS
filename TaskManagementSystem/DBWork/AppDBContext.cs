@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TaskManagementSystem.ObjectLogic;
-using TMS = TaskManagementSystem.Models;
+using TaskManagementSystem.Models;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace TaskManagementSystem.DBWork
@@ -17,11 +17,11 @@ namespace TaskManagementSystem.DBWork
 
 		private readonly IServiceProvider _container;
 
-		public DbSet<TMS.TaskState> TaskStates { get; set; }
+		public DbSet<TaskState> TaskStates { get; set; }
 
-		public DbSet<TMS.TMSTask> Tasks { get; set; }
+		public DbSet<TMSTask> Tasks { get; set; }
 
-		public DbSet<TMS.TaskHistory> TaskHistories { get; set; }
+		public DbSet<TaskHistory> TaskHistories { get; set; }
 
 		public AppDBContext(
 			DbContextOptions<AppDBContext> options,
@@ -33,12 +33,12 @@ namespace TaskManagementSystem.DBWork
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<TMS.TaskHistory>()
+			modelBuilder.Entity<TaskHistory>()
 				.HasOne(p => p.State)
 				.WithMany(t => t.TaskHistories)
 				.OnDelete(DeleteBehavior.SetNull);
 
-			modelBuilder.Entity<TMS.TMSTask>()
+			modelBuilder.Entity<TMSTask>()
 				.HasOne(p => p.State)
 				.WithMany(t => t.Tasks)
 				.OnDelete(DeleteBehavior.SetNull);
@@ -60,7 +60,7 @@ namespace TaskManagementSystem.DBWork
 		{
 			_taskLogic = _container.GetService<TaskObjectLogic>();
 			var entities = GetChangedEntities();
-			await _taskLogic.ExecuteAsync(GetChangedEntitiesByType(entities, typeof(TMS.TMSTask)));
+			await _taskLogic.ExecuteAsync(GetChangedEntitiesByType(entities, typeof(TMSTask)));
 		}
 
 		protected IEnumerable<EntityEntry> GetChangedEntities()

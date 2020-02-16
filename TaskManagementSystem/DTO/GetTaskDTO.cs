@@ -1,5 +1,5 @@
 ﻿using System;
-using TMS = TaskManagementSystem.Models;
+using TaskManagementSystem.Models;
 
 namespace TaskManagementSystem.DTO
 {
@@ -19,7 +19,7 @@ namespace TaskManagementSystem.DTO
 
 		public Guid? ParentTaskId { get; set; }
 
-		public GetTaskDTO(TMS.TMSTask task)
+		public GetTaskDTO(TMSTask task)
 		{
 			Id = task.Id;
 			Description = task.Description;
