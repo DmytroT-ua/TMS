@@ -4,6 +4,9 @@ using TMS = TaskManagementSystem.Models;
 
 namespace TaskManagementSystem.Models
 {
+	/// <summary>
+	/// Task history model for Task Management system
+	/// </summary>
 	public class TaskHistory : BaseEntity
 	{
 		[NotMapped]

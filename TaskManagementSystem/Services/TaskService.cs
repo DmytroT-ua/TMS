@@ -9,6 +9,9 @@ using TMS = TaskManagementSystem.Models;
 
 namespace TaskManagementSystem.Services
 {
+	/// <summary>
+	/// Contains all methods for performing basic task functions.
+	/// </summary>
 	public class TaskService
 	{
 		private readonly ITaskRepository _taskRep;
@@ -19,12 +22,26 @@ namespace TaskManagementSystem.Services
 			_taskRep = taskRep;
 		}
 
+		/// <summary>
+		/// Gets single task by id.
+		/// </summary>
+		/// <param name="id">Task id</param>
+		/// <returns>Returns task.</returns>
 		public async Task<TMS.Task> FindAsync(Guid id)
 			=> await _taskRep.FindAsync(id);
 
+		/// <summary>
+		/// Gets all tasks.
+		/// </summary>
+		/// <returns>Returns all tasks.</returns>
 		public async Task<IEnumerable<GetTaskDTO>> GetAllAsync()
 			=> await _taskRep.GetAllAsync();
 
+		/// <summary>
+		/// Creates new task.
+		/// </summary>
+		/// <param name="task">Create task model</param>
+		/// <returns>Returns created task.</returns>
 		public async Task<TMS.Task> AddAsync(CreateTaskDTO task)
 		{
 			var newTask = await _taskRep.AddAsync(task);
@@ -32,6 +49,11 @@ namespace TaskManagementSystem.Services
 			return newTask;
 		}
 
+		/// <summary>
+		/// Updates task by id.
+		/// </summary>
+		/// <param name="id">Task id</param>
+		/// <param name="task">Update task model</param>
 		public async Task UpdateAsync(Guid id, UpdateTaskDTO task)
 		{
 			var taskEntity = await _taskRep.FindAsync(id);
@@ -42,6 +64,11 @@ namespace TaskManagementSystem.Services
 			}
 		}
 
+		/// <summary>
+		/// Removes task by id if children not exists.
+		/// </summary>
+		/// <param name="id">Task id</param>
+		/// <returns>Returns true if task dont have children and was removed.</returns>
 		public async Task<bool> RemoveAsync(Guid id)
 		{
 			bool result = default;
@@ -54,6 +81,11 @@ namespace TaskManagementSystem.Services
 			return result;
 		}
 
+		/// <summary>
+		/// Generates bytes for report of tasks in progress for specific date.
+		/// </summary>
+		/// <param name="date">Date when task was in progress</param>
+		/// <returns>Returns bytes for csv report.</returns>
 		public async Task<byte[]> GetReport(DateTime date)
 		{
 			IEnumerable<ReportTaskDTO> reportData = await _taskRep.GetTasksForReport(date);
@@ -68,9 +100,18 @@ namespace TaskManagementSystem.Services
 			return buffer;
 		}
 
+		/// <summary>
+		/// Check if task exists.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns>Returns is task exists</returns>
 		public bool IsTaskExists(Guid id)
 			=> _taskRep.IsTaskExists(id);
 
+		/// <summary>
+		/// Recursively updates parent tasks state.
+		/// </summary>
+		/// <param name="taskId">Child task id.</param>
 		private async Task UpdateParentTaskState(Guid taskId)
 		{
 			if (!Guid.Empty.Equals(taskId) && await _taskRep.GetChildrenAmount(taskId) != 0)
@@ -93,6 +134,11 @@ namespace TaskManagementSystem.Services
 			}
 		}
 
+		/// <summary>
+		/// Concatenate task report columns in to use in csv format
+		/// </summary>
+		/// <param name="reportData"></param>
+		/// <returns>Returns columns for task report</returns>
 		protected virtual IEnumerable<object> GetReportRows(IEnumerable<ReportTaskDTO> reportData)
 			=> reportData.Select(task => new object[]
 			{
@@ -104,6 +150,10 @@ namespace TaskManagementSystem.Services
 				$"{task.StartDate}"
 			});
 
+		/// <summary>
+		/// Creates array of columns for task report
+		/// </summary>
+		/// <returns>Returns task report columns headers</returns>
 		protected virtual string[] GetReportHeaders()
 			=> new string[]
 			{

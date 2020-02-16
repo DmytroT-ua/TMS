@@ -4,6 +4,9 @@ using TaskManagementSystem.DTO;
 
 namespace TaskManagementSystem.Models
 {
+	/// <summary>
+	/// Task model for Task Management system
+	/// </summary>
 	public class Task : BaseEntity
 	{
 		public string Description { get; set; }
@@ -32,6 +35,11 @@ namespace TaskManagementSystem.Models
 			ParentTaskId = dto.ParentTaskId;
 		}
 
+		/// <summary>
+		/// Updates task from UpdateTaskDTO
+		/// </summary>
+		/// <param name="dto">Update model</param>
+		/// <param name="childrenAmount">Amount of children records</param>
 		public void UpdateFromDTO(UpdateTaskDTO dto, int childrenAmount)
 		{
 			if (Name != dto.Name) Name = dto.Name;

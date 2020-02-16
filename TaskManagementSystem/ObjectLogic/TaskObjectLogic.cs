@@ -7,6 +7,9 @@ using TMS = TaskManagementSystem.Models;
 
 namespace TaskManagementSystem.ObjectLogic
 {
+	/// <summary>
+	/// Contains logic executed when task changes
+	/// </summary>
 	public class TaskObjectLogic
 	{
 		private ITaskHistoryRepository _historyRep;
@@ -16,11 +19,19 @@ namespace TaskManagementSystem.ObjectLogic
 			_historyRep = historyRep;
 		}
 
+		/// <summary>
+		/// Executes logic for task change event
+		/// </summary>
+		/// <param name="changedEntities"></param>
 		public async Task ExecuteAsync(IEnumerable<EntityEntry> changedEntities)
 		{
 			await UpdateHistory(changedEntities);
 		}
 
+		/// <summary>
+		/// Updates task history if state is changed
+		/// </summary>
+		/// <param name="changedTasks"></param>
 		private async Task UpdateHistory(IEnumerable<EntityEntry> changedTasks)
 		{
 			var entities = changedTasks

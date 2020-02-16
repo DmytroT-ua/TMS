@@ -8,6 +8,7 @@ using TMS = TaskManagementSystem.Models;
 
 namespace TaskManagementSystem.DBWork
 {
+	/// <inheritdoc/>
 	public class TaskRepository : ITaskRepository
 	{
 		private readonly AppDBContext _context;
@@ -17,14 +18,17 @@ namespace TaskManagementSystem.DBWork
 			_context = context;
 		}
 
+		/// <inheritdoc/>
 		public async Task<TMS.Task> FindAsync(Guid id)
 			=> await _context.Tasks.FindAsync(id);
 
+		/// <inheritdoc/>
 		public async Task<IEnumerable<GetTaskDTO>> GetAllAsync()
 			=> await _context.Tasks
 				.Select(t => new GetTaskDTO(t))
 				.ToListAsync();
 
+		/// <inheritdoc/>
 		public async Task<TMS.Task> AddAsync(CreateTaskDTO dto)
 		{
 			var taskToAdd = new TMS.Task(dto);
@@ -35,12 +39,14 @@ namespace TaskManagementSystem.DBWork
 			return taskToAdd;
 		}
 
+		/// <inheritdoc/>
 		public async Task UpdateAsync(UpdateTaskDTO dto, TMS.Task taskEntity)
 		{
 			taskEntity.UpdateFromDTO(dto, await GetChildrenAmount(taskEntity.Id));
 			await _context.SaveChangesAsync();
 		}
 
+		/// <inheritdoc/>
 		public async Task<TMS.Task> RemoveAsync(TMS.Task task)
 		{
 			_context.Tasks.Remove(task);
@@ -48,12 +54,14 @@ namespace TaskManagementSystem.DBWork
 			return task;
 		}
 
+		/// <inheritdoc/>
 		public async Task<Guid> GetParentTaskId(Guid taskId)
 			=> await _context.Tasks
 				.Where(t => t.Id == taskId)
 				.Select(t => t.ParentTaskId)
 				.FirstOrDefaultAsync() ?? Guid.Empty;
 
+		/// <inheritdoc/>
 		public async Task<Guid> UpdateTaskState(Guid taskId, Guid stateId)
 		{
 			var task = await FindAsync(taskId);
@@ -62,24 +70,29 @@ namespace TaskManagementSystem.DBWork
 			return task.Id;
 		}
 
+		/// <inheritdoc/>
 		public async Task<int> GetChildrenAmount(Guid parentId)
 			=> await _context.Tasks
 				.Where(t => t.ParentTaskId == parentId)
 				.CountAsync();
 
+		/// <inheritdoc/>
 		public async Task<int> GetChildrenAmountByState(Guid parentId, Guid stateId)
 			=> await _context.Tasks
 				.Where(t => t.ParentTaskId == parentId && t.StateId == stateId)
 				.CountAsync();
 
+		/// <inheritdoc/>
 		public bool IsTaskExists(Guid id)
 			=> _context.Tasks.Any(e => e.Id == id);
 
+		/// <inheritdoc/>
 		public async Task<TMS.Task> GetTaskWithChildren(Guid id)
 			=> await _context.Tasks
 				.Include(t => t.Children)
 				.SingleOrDefaultAsync(t => t.Id == id);
 
+		/// <inheritdoc/>
 		public async Task<IEnumerable<ReportTaskDTO>> GetTasksForReport(DateTime date)
 		{
 			var data = from task in _context.Tasks
